@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//fitur login dan register
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('questions', 'QuestionController');
