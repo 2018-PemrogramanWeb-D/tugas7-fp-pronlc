@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Question;
 
 class HomeController extends Controller
 {
@@ -24,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $questions = Question::orderBy('id', 'desc')->get();
-        return view('home', compact('questions'));
+        return view('home');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\forum;
 use Illuminate\Http\Request;
-use App\Question;
 
-class QuestionController extends Controller
+class ForumController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        //
     }
 
     /**
@@ -35,32 +35,16 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        'title'=>'required',
-        'body'=> 'required'
-          ]);
-
-        $question = new Question([
-            'title'     => $request->get('title'),
-            'body'      => $request->get('body'),
-            'id_user'   => 1,
-            'upvote'    => rand()%100,
-            'downvote'    => rand()%100,
-            'view'    => rand()%100
-          ]);
-
-        $question->save();
-
-        return redirect('/home')->with('success', 'Question has been added');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(forum $forum)
     {
         //
     }
@@ -68,10 +52,10 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(forum $forum)
     {
         //
     }
@@ -80,10 +64,10 @@ class QuestionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, forum $forum)
     {
         //
     }
@@ -91,10 +75,10 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(forum $forum)
     {
         //
     }

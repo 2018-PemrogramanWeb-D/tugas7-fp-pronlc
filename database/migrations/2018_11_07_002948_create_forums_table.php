@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableQuestions extends Migration
+class CreateForumsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTableQuestions extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('forums', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('title');
-            $table->text('body');
-            $table->integer('id_user');
-            $table->integer('upvote');
-            $table->integer('downvote');
-            $table->integer('view');
+            $table->string('slug');
+            $table->text('description');
+            $table->string('image')->nullable();
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateTableQuestions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('forums');
     }
 }
