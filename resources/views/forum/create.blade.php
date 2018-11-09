@@ -19,6 +19,13 @@
                             </textarea>
                         </div>
                         <div class="form-group">
+                            <select name="tags[]" multiple="multiple" class="form-control tags">
+                                @foreach($tags as $tag)
+                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <input type="file" class="form-control" name="image">
                         </div>
                         <button type="submit" class="btn btn-success btn-block">Submit</button>
@@ -28,4 +35,15 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function() {
+        $('.tags').select2({
+            placeholder : "Select tags...",
+            maximumSelectionLength : 3
+        });
+    });
+</script>
 @endsection

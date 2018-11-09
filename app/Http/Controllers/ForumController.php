@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\forum;
+use App\Tags;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -25,7 +26,8 @@ class ForumController extends Controller
      */
     public function create()
     {
-        return view('forum.create');
+        $tags = Tags::all();
+        return view('forum.create', compact('tags'));
     }
 
     /**
@@ -50,6 +52,7 @@ class ForumController extends Controller
         }
 
         $forums->save();
+        $forums->tags()->sync($request->tags);
 
         return back();
     }
