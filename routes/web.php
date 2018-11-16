@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/forum', 'ForumController');
+
+Route::get('/forum/read/{slug}', 'ForumController@show')->name('forumslug');

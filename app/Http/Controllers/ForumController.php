@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\forum;
+use App\Tags;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -13,9 +14,16 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $forums = Forum::paginate(5);
+        return view('forum.index', compact('forums'));
     }
 
     /**
@@ -25,7 +33,9 @@ class ForumController extends Controller
      */
     public function create()
     {
-        return view('forum.create');
+        $forums = Forum::orderBy('id', 'desc')->paginate(1);
+        $tags = Tags::all();
+        return view('forum.create', compact('tags', 'forums'));
     }
 
     /**
@@ -36,6 +46,12 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'tags' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
         $forums = New Forum;
         $forums->user_id = Auth::user()->id;
         $forums->title = $request->title;
@@ -50,8 +66,9 @@ class ForumController extends Controller
         }
 
         $forums->save();
+        $forums->tags()->sync($request->tags);
 
-        return back();
+        return back()->withInfo('Pertanyaan berhasil dibuat.');
     }
 
     /**
@@ -60,9 +77,10 @@ class ForumController extends Controller
      * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function show(forum $forum)
+    public function show($slug)
     {
-        //
+        $forums = Forum::where('id', $slug)->orWhere('slug', $slug)->firstOrFail();
+        return view('forum.show', compact('forums'));
     }
 
     /**
@@ -73,8 +91,9 @@ class ForumController extends Controller
      */
     public function edit($id)
     {
+        $tags = Tags::all();
         $forum = forum::find($id);
-        return view('forum.edit', compact('forum'));
+        return view('forum.edit', compact('forum','tags'));
     }
 
     /**
@@ -86,6 +105,12 @@ class ForumController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'tags' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
         $forums = forum::find($id);
         $forums->user_id = Auth::user()->id;
         $forums->title = $request->title;
@@ -105,8 +130,9 @@ class ForumController extends Controller
         }
 
         $forums->save();
+        $forums->tags()->sync($request->tags);
 
-        return back();
+        return back()->withInfo('Pertanyaan berhasil diperbarui.');
     }
 
     /**
