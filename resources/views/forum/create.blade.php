@@ -10,6 +10,7 @@
         <div class="col-md-9">
             <div class="card"> 
                 <div class="card-body">
+<<<<<<< HEAD
                    <form action="{{route('forum.store')}}" method="post"  enctype="multipart/form-data">
                       {{csrf_field()}}
                     <div class="form-group">
@@ -66,11 +67,37 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+=======
+                    <form action="{{ route('forum.store') }}" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="title" placeholder="title...">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" placeholder="description..." rows="10">
+                                
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <select name="tags[]" multiple="multiple" class="form-control tags">
+                                @foreach($tags as $tag)
+                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" class="form-control" name="image">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                    </form>
+                </div>
+>>>>>>> origin/master
             </div>
         </div>
     </div>
 </div>
 @endsection
+<<<<<<< HEAD
  
 @section('js')
 
@@ -86,4 +113,16 @@ $(".tags").select2({
 } );
 </script>
 
+=======
+
+@section('js')
+<script>
+    $(document).ready(function() {
+        $('.tags').select2({
+            placeholder : "Select tags...",
+            maximumSelectionLength : 3
+        });
+    });
+</script>
+>>>>>>> origin/master
 @endsection

@@ -9,8 +9,11 @@ class forum extends Model
     public function tags(){
         return $this->belongsToMany('App\Tags');
     }
+<<<<<<< HEAD
 
     public function user(){
         return $this->belongsTo('App\User');
     }
+=======
+>>>>>>> origin/master
 }
