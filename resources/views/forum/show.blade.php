@@ -28,7 +28,7 @@
                     <a href="#" class="badge" style="background: #ff934a; color: #fff">telukcoding</a> |
                     <small>{{$forums->created_at->diffForHumans()}}</small> |
                     <small>0 Views</small> |
-                    <small>0 Comments</small> |
+                    <small>{{ $forums->comments->count() }} Comments</small> |
                     @foreach($forums->tags as $tag)
                     <div class="badge" style="background: #ff934a; color: #fff">#{{$tag->name}}</div>
                     @endforeach
@@ -76,6 +76,115 @@
             </div>
 
             <br>
+            @forelse($forums->comments as $comment)
+            <div class="card">
+              <div class="card-header" style=" background-color: #2ab27b; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">{{$comment->created_at->diffForHumans()}}</small></div>
+              <div class="card-body" style="background: #f9f9f9; "> 
+                <div class="row">
+                  <div class="col-md-3" id="img_comment">
+                    <img src="{{asset('images/profile.jpg')}}" width="100%">
+                    <br>
+                    <div class="comment_user">
+                    <b>{{$comment->user->name}}</b>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    {{$comment->content}}
+                  </div>
+                </div>
+              </div>
+
+              {{-- tambahan --}}
+              <div class="card-body">
+                  <!-- forelse reply-->
+                  @forelse($comment->comments as $reply)
+                  <div class="card">
+                    <div class="card-header" style="background-color: #2ab27b; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">{{$reply->created_at->diffForHumans()}}</small></div>
+                    <div class="card-body" style="background: #f9f9f9;"> 
+                      <div class="row"> 
+                        <div class="col-md-3" id="img_comment_reply">
+                          <img src="{{asset('images/profile.jpg')}}" width="100%">
+                          <br>
+                          <div class="comment_user">
+                          <b>{{$reply->user->name}}</b>
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          {{$reply->content}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                @empty
+              <p>No reply</p>
+              @endforelse
+              <!-- endforelse reply-->
+
+                <div class="panel-body" style="    border-top: 1px solid #eee;">
+                  <form action="{{ route('replyComment', $comment->id) }}" method="post" style="    padding: 0 16px;">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                      <input type="text" name="content" class="form-control" id="input_reply" placeholder="Reply here..">        
+                    </div>
+                    <button class="btn btn-success" type="submit">Submit</button>
+                    <br><br>
+                  </form>
+                </div>
+
+                {{-- end tambahan --}}
+
+              <div class="card-footer link_a">
+                <div class="info_comment">
+                 <a data-toggle="collapse" href="#{{$comment->id}}-collapse1info"><i class="fa fa-info-circle"></i> Info</a>
+                </div>
+               <div class="reply_comment">
+               <a data-toggle="collapse" href="#{{$comment->id}}-collapse1reply"><i class="fa fa-comment-o"></i> Reply</a>
+               </div>
+              </div>
+
+              <div id="{{$comment->id}}-collapse1info" class="card-collapse collapse">
+                <div class="card-body">*Klik 'Reply' untuk melihat atau membuat komentar balasan.</div> 
+              </div>
+
+              <div id="{{$comment->id}}-collapse1reply" class="card-collapse collapse">
+                <div class="card-body">
+                  <!-- forelse reply-->
+                  <div class="card">
+                    <div class="card-header" style="background-color: #2ab27b; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">2 min ago </small></div>
+                    <div class="card-body" style="background: #f9f9f9;"> 
+                      <div class="row"> 
+                        <div class="col-md-3" id="img_comment_reply">
+                          <img src="{{asset('images/profile.jpg')}}" width="100%">
+                          <br>
+                          <div class="comment_user">
+                          <b>Azzam Jiul</b>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel-body" style="    border-top: 1px solid #eee;">
+                  <form action="#" method="post" style="    padding: 0 16px;">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                      <input type="text" name="content" class="form-control" id="input_reply" placeholder="Reply here..">        
+                    </div>
+                    <button class="btn btn-success" type="submit">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <br>
+            @empty
+            <p>No Comment</p>
+            @endforelse
+            <!-- endforelse -->
+            <hr>
+
             <hr>
             <div class="panel panel-default" style="background-color: #f9f9f9;">
               <div class="panel-body">
@@ -83,8 +192,17 @@
               <div class="open_comment">
                   <div class="h1"><h4>Add a Comment</h4></div>
               </div>
+              @if (Auth::guest())
+
+              <div class="comment-show" style="padding: 60px">
+                <a href="{{route('login')}}" style="color: #28ad76">
+                  <p><i class="fa fa-sign-in"></i> Login to Comment</p>
+                </a>
+              </div>
+
+              @else
               <div class="comment-show">
-                <form action="#" method="post">
+                <form action="{{ route('addComment', $forums->id)}}" method="post">
                   {{csrf_field()}}
                 <div class="form-group">
                   <input type="text" name="content" id="Your-Answer" placeholder="Your Comment:" required="required">
@@ -95,6 +213,8 @@
                 </div>
               </form>
               </div>
+
+              @endif
             </div>
               </div>
             </div>
