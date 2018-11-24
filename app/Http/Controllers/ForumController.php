@@ -33,14 +33,11 @@ class ForumController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
         $forums = Forum::orderBy('id', 'desc')->paginate(1);
         $tags = Tags::all();
         return view('forum.create', compact('tags', 'forums'));
-=======
         $tags = Tags::all();
         return view('forum.create', compact('tags'));
->>>>>>> origin/master
     }
 
     /**

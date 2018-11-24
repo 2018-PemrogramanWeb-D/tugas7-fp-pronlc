@@ -14,6 +14,4 @@ class forum extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
-=======
->>>>>>> origin/master
 }
