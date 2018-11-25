@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\forum;
 use App\Tags;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Auth;
+use DB;
+use Storage;
 
 class ForumController extends Controller
 {
@@ -17,13 +20,32 @@ class ForumController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index','show');
+        $this->middleware('auth')->except('index','show','populars');
+    }
+
+    public function populars()
+    {
+        $populars = DB::table('forums')
+                    ->join('views','forums.id','=','views.viewable_id')
+                    ->select(DB::raw('count(viewable_id) as count'),'forums.id','forums.title','forums.slug')
+                    ->groupBy('id','title','slug')
+                    ->orderBy('count','desc')
+                    ->take(10)
+                    ->get();
+        return view('forum.popular', compact('populars'));
     }
 
     public function index()
     {
+        $populars = DB::table('forums')
+                    ->join('views','forums.id','=','views.viewable_id')
+                    ->select(DB::raw('count(viewable_id) as count'),'forums.id','forums.title','forums.slug')
+                    ->groupBy('id','title','slug')
+                    ->orderBy('count','desc')
+                    ->take(5)
+                    ->get();
         $forums = Forum::paginate(5);
-        return view('forum.index', compact('forums'));
+        return view('forum.index', compact('forums', 'populars'));
     }
 
     /**
@@ -81,8 +103,17 @@ class ForumController extends Controller
      */
     public function show($slug)
     {
+        $populars = DB::table('forums')
+                    ->join('views','forums.id','=','views.viewable_id')
+                    ->select(DB::raw('count(viewable_id) as count'),'forums.id','forums.title','forums.slug')
+                    ->groupBy('id','title','slug')
+                    ->orderBy('count','desc')
+                    ->take(5)
+                    ->get();
+        $forums = Forum::paginate(5);
         $forums = Forum::where('id', $slug)->orWhere('slug', $slug)->firstOrFail();
-        return view('forum.show', compact('forums'));
+        $forums->addViewWithExpiryDate(Carbon::now()->addHours(2));
+        return view('forum.show', compact('forums','populars'));
     }
 
     /**
@@ -91,10 +122,10 @@ class ForumController extends Controller
      * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
         $tags = Tags::all();
-        $forum = forum::find($id);
+        $forum = Forum::where('id', $slug)->orWhere('slug', $slug)->firstOrFail();
         return view('forum.edit', compact('forum','tags'));
     }
 
@@ -143,8 +174,12 @@ class ForumController extends Controller
      * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function destroy(forum $forum)
+    public function destroy($id)
     {
-        //
+        $forum = Forum::find($id);
+        Storage::delete($forum->image);
+        $forum->tags()->detach();
+        $forum->delete();
+        return back()->withInfo('Pertanyaan berhasil dihapus.');
     }
 }

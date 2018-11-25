@@ -16,6 +16,23 @@
 		<div class="col-md-12" id="tc_container_wrap">
 			<div class="card" id="tc_paneldefault"> 
 				<div class="card-body" id="tc_panelbody"  style="background: #f9f9f9;">  
+				<div class="card">
+                       <div class="card-header" style="background-color: #ff934a;padding: 6px 11px 6px 23px;">
+                          <div class="menu_a" style="float: left;">
+                          <a href="{{route('popular')}}">Populer</a> 
+                          </div>
+                          <div class="search" style="margin: 3px;">
+                          <div class="col-md-4 float-right" style="    padding-right: 0;">
+                          <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search for..." style=" margin-right: 3px;background: #f5f8fa;">
+                          <span class="input-group-btn">
+                          <button class="btn btn-warning" type="button" style="color: #fff;" >Go!</button>
+                        </span>
+                        </div>
+                       </div>
+                     </div>
+                    </div>
+                  </div>
 					<div class="row">
 						<div class="col-md-8" style="    padding-right: 0;"><br>
 							<table class="table table-bordered">
@@ -42,8 +59,8 @@
                         @endif
 											</div> 
 										</td>
-										<td  style="text-align: center"><small> 2</small></td>
-										<td  style="text-align: center"><small> 2</small></td>
+										<td  style="text-align: center"><small> {{ $forum->comments->count() }}</small></td>
+										<td  style="text-align: center"><small> {{ $forum->getViews() }}</small></td>
 										<td>
 											<div class="forum_by">
 												<small style="margin-bottom: 0; color: #666">2 min ago</small>
@@ -58,16 +75,7 @@
 							{!! $forums->links() !!}
 						</div>
 						<div class="col-md-4"> <br>
-							<div class="card">
-								<div class="card-header" style="background: #ff934a; color: #fff; padding: 8px 1.25rem;">Popular</div>
-								<div class="list-group">
-									<a href="#" class="list-group-item" id="index_hover">What is Lorem Ipsum?
-										<a href="#" class="list-group-item" id="index_hover">Where does it come from?
-											
-										</a> 
-									</div>
-								</div>
-							</div>
+							@include('layouts.popular')
 						</div>
 						<hr style="margin-top: 0;"> 
 						<div class="card">
