@@ -22,3 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/forum', 'ForumController');
 
 Route::get('/forum/read/{slug}', 'ForumController@show')->name('forumslug');
+
+Route::post('/comment/addComment/{forum}', 'CommentController@addComment')->name('addComment');
+
+Route::post('/comment/reply/{comment}', 'CommentController@replyComment')->name('replyComment');
+
+Route::get('/populars', 'ForumController@populars')->name('popular');
+
+Route::get('/user/{user}', 'ProfileController@index')->name('profile');

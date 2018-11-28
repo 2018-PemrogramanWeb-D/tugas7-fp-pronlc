@@ -3,15 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use CyrildeWit\EloquentViewable\Viewable;
 
-
-class forum extends Model
+class Comment extends Model
 {
-    
-    use Viewable;
-    public function tags(){
-        return $this->belongsToMany('App\Tags');
+    public function commentable()
+    {
+        return $this->morphTo();
     }
 
     public function user(){
