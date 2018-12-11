@@ -110,7 +110,6 @@ class ForumController extends Controller
                     ->orderBy('count','desc')
                     ->take(5)
                     ->get();
-        $forums = Forum::paginate(5);
         $forums = Forum::where('id', $slug)->orWhere('slug', $slug)->firstOrFail();
         $forums->addViewWithExpiryDate(Carbon::now()->addHours(2));
         return view('forum.show', compact('forums','populars'));

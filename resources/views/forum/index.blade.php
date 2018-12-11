@@ -19,7 +19,7 @@
 				<div class="card">
                        <div class="card-header" style="background-color: #ff934a;padding: 6px 11px 6px 23px;">
                           <div class="menu_a" style="float: left;">
-                          <a href="{{route('popular')}}">Populer</a> 
+                          <a href="{{route('popular')}}">Popular</a> 
                           </div>
                           <div class="search" style="margin: 3px;">
                           <div class="col-md-4 float-right" style="    padding-right: 0;">
@@ -50,7 +50,7 @@
 										<td width="453">
 											<div class="forum_title">
 												<h4> <a href="{{route('forumslug', $forum->slug)}}">{{ str_limit($forum->title, 40) }}</a></h4>
-                        <p>{{ str_limit($forum->description, 80) }}</p>
+                        <p>{!! strip_tags(str_limit($forum->description, 80)) !!}</p>
                         @foreach ($forum->tags as $tag)
                         <a href="#" class="badge tag_label" style="background: #ff934a; color: #fff">#{{ $tag->name }}</a>
                         @endforeach

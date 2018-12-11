@@ -78,7 +78,7 @@
               <br>
               @forelse($forums->comments as $comment)
               <div class="card">
-                <div class="card-header" style=" background-color: #2ab27b; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">{{$comment->created_at->diffForHumans()}}</small></div>
+                <div class="card-header" style=" background-color: #ff934a; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">{{$comment->created_at->diffForHumans()}}</small></div>
                 <div class="card-body" style="background: #f9f9f9; "> 
                   <div class="row">
                     <div class="col-md-3" id="img_comment">
@@ -99,7 +99,7 @@
                   <!-- forelse reply-->
                   @forelse($comment->comments as $reply)
                   <div class="card">
-                    <div class="card-header" style="background-color: #2ab27b; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">{{$reply->created_at->diffForHumans()}}</small></div>
+                    <div class="card-header" style="background-color: #ff934a; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">{{$reply->created_at->diffForHumans()}}</small></div>
                     <div class="card-body" style="background: #f9f9f9;"> 
                       <div class="row"> 
                         <div class="col-md-3" id="img_comment_reply">
@@ -135,15 +135,6 @@
                 
                 {{-- end tambahan --}}
                 
-                <div class="card-footer link_a">
-                  <div class="info_comment">
-                    <a data-toggle="collapse" href="#{{$comment->id}}-collapse1info"><i class="fa fa-info-circle"></i> Info</a>
-                  </div>
-                  <div class="reply_comment">
-                    <a data-toggle="collapse" href="#{{$comment->id}}-collapse1reply"><i class="fa fa-comment-o"></i> Reply</a>
-                  </div>
-                </div>
-                
                 <div id="{{$comment->id}}-collapse1info" class="card-collapse collapse">
                   <div class="card-body">*Klik 'Reply' untuk melihat atau membuat komentar balasan.</div> 
                 </div>
@@ -152,7 +143,7 @@
                   <div class="card-body">
                     <!-- forelse reply-->
                     <div class="card">
-                      <div class="card-header" style="background-color: #2ab27b; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">2 min ago </small></div>
+                      <div class="card-header" style="background-color: #ff934a; color: #fff; border-top-right-radius: 0px; border-top-left-radius: 0px;"><i class="fa fa-clock-o" style="color: #eee"></i> <small style="color: #eee">2 min ago </small></div>
                       <div class="card-body" style="background: #f9f9f9;"> 
                         <div class="row"> 
                           <div class="col-md-3" id="img_comment_reply">
@@ -177,16 +168,7 @@
                     </form>
                   </div>
                 </div>
-              </div>
-              <br>
-              @empty
-              <p>No Comment</p>
-              @endforelse
-              <!-- endforelse -->
-              <hr>
-              
-              <hr>
-              <div class="panel panel-default" style="background-color: #f9f9f9;">
+                <div class="panel panel-default" style="background-color: #f9f9f9;">
                 <div class="panel-body">
                   <div class="add_comment">
                     <div class="open_comment">
@@ -218,8 +200,14 @@
                   </div>
                 </div>
               </div>
-            </div>
-            </div>
+              </div>
+              <br>
+              @empty
+              <p>No Comment</p>
+              @endforelse
+              <!-- endforelse -->
+              <hr>
+              <hr>
         <div class="col-md-4">
               <a href="{{route('forum.create')}}" class="btn btn-success btn-block">Buat Pertanyaan</a><br>
               @include('layouts.popular')

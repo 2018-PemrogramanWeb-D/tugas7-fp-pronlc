@@ -6,7 +6,7 @@
     <div class="card-body" id="xx" style="color: #fff; border:1px solid #fff;">
         <div class="text-center"> 
            <h1 style="font-size: 3.5rem;">Popular</h1> 
-          <p>Menampilkan thread populer. </p>  
+          <p>Menampilkan thread popular. </p>  
       </div>
     </div> 
   </div> 
@@ -19,7 +19,7 @@
                    <div class="card">
                        <div class="card-header" style="background-color: #ff934a;padding: 6px 11px 6px 23px;">
                           <div class="menu_a" style="float: left;">
-                          <a href="{{route('popular')}}">Populer</a> 
+                          <a href="{{route('popular')}}">Popular</a> 
                           </div>
                           <div class="search" style="margin: 3px;">
                           <div class="col-md-4 float-right" style="    padding-right: 0;">

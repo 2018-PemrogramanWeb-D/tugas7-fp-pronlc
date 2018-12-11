@@ -15,15 +15,13 @@
                     <div class="form-group">
                       <input type="text" id="tc_input" class="form-control" name="title" placeholder="Title"> 
                     </div>
-                    
+                    <br>
                    <div class="des"> 
                  <a class="btn btn_tc btn-block" data-toggle="collapse" data-target="#description-textarea" style="color: #777">Description</a> 
               <div id="description-textarea" class="collapse">     
-                <div class="bg">
                    <div class="form-group">
                         <textarea type="text" class="form-control" id="tc_input" name="description" placeholder="description"> </textarea>
                       </div>
-                </div> 
               </div>             
             </div>
                <div class="form-group">
@@ -36,11 +34,9 @@
              
              <a data-toggle="collapse" data-target="#screenshot-open"><i class="fa fa-image" id="upload_image"></i></a>
             <div id="screenshot-open" class="collapse">  
-              <div class="bg">
                  <div class="form-group">
                      <input type="file" class="form-control" name="image" placeholder="image" style="background-color: #f5f8fa;"> 
                   </div>
-              </div> 
             </div>
              <br> 
             
